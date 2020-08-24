@@ -2,6 +2,10 @@ import java.util.Random;
 import java.util.Scanner;
 import java.math.*;
 
+/**
+ * @author rahul
+ *
+ */
 public class ArraySort {
 
   public static void main(String[] args) {
@@ -27,20 +31,22 @@ public class ArraySort {
         userArr[i] = Integer.valueOf(strUserArr[i]);
       }
     }
-    System.out.println("The unsorted array is: " + printArr(userArr));
-    System.out.println("---------------------------------------------------------");
-    System.out.println("Choose a sorting(sorts in ascending order) algorithm from the given options "
-        + "below: ");
+    System.out.println(
+        "-----------------------------------------------------------------------------------");
+    System.out.println(
+        "Choose a sorting(sorts in ascending order) algorithm from the given options below: ");
     System.out.println("1. Bubble Sort: 'b'");
     System.out.println("2. Selection Sort: 's'");
     System.out.println("3. Insertion Sort: 'i'");
     System.out.println("4. Merge Sort: 'm'");
     System.out.println("5. Quick Sort: 'q'");
-    System.out.println("---------------------------------------------------------");
-
+    System.out.println(
+        "-----------------------------------------------------------------------------------");
     userIn = sc.next();
-
-    switch (userIn) { 
+    System.out.println();
+    System.out.println("The unsorted array is: " + printArr(userArr));
+    
+    switch (userIn) {
       case "B":
       case "b":
         bubbleSort(userArr);
@@ -109,18 +115,29 @@ public class ArraySort {
   } 
   
   /**
+   * Swaps any 2 elements in a given array
+   * 
+   * @param arr  - given array
+   * @param idx1 - index of 1st element to be swapped
+   * @param idx2 - index of 2nd element to be swapped
+   */
+  private static void swap(int[] arr, int idx1, int idx2) {
+    int temp = arr[idx1];
+    arr[idx1] = arr[idx2];
+    arr[idx2] = temp;
+  }
+  
+  /**
    * This method implements the bubble sort algorithm. Its time complexity is O(N^2).
    * 
    * @param userArr - array to be sorted
    */
   private static void bubbleSort(int[] userArr) {
     int count = 1;
-    for(int i = 0; i < userArr.length; i++) {
-      for(int j = 0; j < userArr.length - i - 1; j++) {
-        if(userArr[j] > userArr[j+1]) {
-          int temp = userArr[j+1];
-          userArr[j+1] = userArr[j];
-          userArr[j] = temp;        
+    for (int i = 0; i < userArr.length; i++) {
+      for (int j = 0; j < userArr.length - i - 1; j++) {
+        if (userArr[j] > userArr[j + 1]) {
+          swap(userArr, j, j + 1);
         }
       }
       if (i != userArr.length - 1) {
@@ -132,7 +149,7 @@ public class ArraySort {
       }
       count++;
     }
-   
+
   }
 
   /**
@@ -145,9 +162,7 @@ public class ArraySort {
     for (int i = 0; i < userArr.length; i++) {
       for (int j = i + 1; j < userArr.length; j++) {
         if (userArr[i] > userArr[j]) {
-          int temp = userArr[j];
-          userArr[j] = userArr[i];
-          userArr[i] = temp;
+          swap(userArr, i, j);
         }
       }
 
@@ -163,8 +178,31 @@ public class ArraySort {
 
   }
 
+  /**
+   * This method implements the insertion sort algorithm. Its time complexity is O(N^2)
+   * 
+   * @param userArr
+   */
   private static void insertionSort(int[] userArr) {
-    System.out.println("I");
+    int count = 1;
+    for (int i = 1; i < userArr.length; i++) {
+      while (i > 0 && userArr[i - 1] > userArr[i]) {
+        swap(userArr, i, i - 1);
+        i--; /*
+              * to swap values within the first half of the sorted array so the above while loop
+              * runs again till the first half is sorted correctly
+              */
+        if (i != userArr.length - 1) {
+          System.out.println("Step " + count);
+          System.out.println(printArr(userArr));
+        } else {
+          System.out.println();
+          System.out.println("The sorted array is: " + printArr(userArr));
+        }
+        count++;
+      }
+
+    }
   }
 
   private static void mergeSort(int[] userArr) {
