@@ -115,6 +115,33 @@ public class ArraySort {
    */
   private static void bubbleSort(int[] userArr) {
     int count = 1;
+    for(int i = 0; i < userArr.length; i++) {
+      for(int j = 0; j < userArr.length - i - 1; j++) {
+        if(userArr[j] > userArr[j+1]) {
+          int temp = userArr[j+1];
+          userArr[j+1] = userArr[j];
+          userArr[j] = temp;        
+        }
+      }
+      if (i != userArr.length - 1) {
+        System.out.println("Step " + count);
+        System.out.println(printArr(userArr));
+      } else {
+        System.out.println();
+        System.out.println("The sorted array is: " + printArr(userArr));
+      }
+      count++;
+    }
+   
+  }
+
+  /**
+   * This method implements the selection sort algorithm. Its time complexity is O(N^2).
+   * 
+   * @param userArr
+   */
+  private static void selectionSort(int[] userArr) {
+    int count = 1;
     for (int i = 0; i < userArr.length; i++) {
       for (int j = i + 1; j < userArr.length; j++) {
         if (userArr[i] > userArr[j]) {
@@ -134,10 +161,6 @@ public class ArraySort {
       count++;
     }
 
-  }
-
-  private static void selectionSort(int[] userArr) {
-    System.out.println("S");
   }
 
   private static void insertionSort(int[] userArr) {
