@@ -6,6 +6,10 @@ import java.math.*;
  * @author rahul
  *
  */
+/**
+ * @author rahul
+ *
+ */
 public class ArraySort {
 
   public static void main(String[] args) {
@@ -206,8 +210,17 @@ public class ArraySort {
     }
   }
 
+  /**
+   * This method implements the merge sort algorithm. Its time complexity is O(N log(n))
+   * @param userArr
+   * @return
+   */
   private static int[] mergeSort(int[] userArr) {
-    /*int[] left;
+    if(userArr.length == 1) { // base case
+      return userArr;
+    }
+    
+    int[] left;
     int[] right;
     if (userArr.length % 2 == 0) { // even length
       left = new int[userArr.length / 2];
@@ -217,51 +230,47 @@ public class ArraySort {
       left = new int[userArr.length / 2];
       right = new int[userArr.length - left.length];
     }
+    
+    for (int i = 0; i < userArr.length/2; i++) {
+      left[i] = userArr[i];
+     
+    }
+    for( int i = ( userArr.length/2) ; i < userArr.length; i++) {
+      right[i - (userArr.length/2)] = userArr[i];
+    }
+    
+    left = mergeSort(left);
+    right = mergeSort(right);
+    int[] retArr = merge(left,right);
+    System.out.println(printArr(retArr));
+    return retArr;
+    
 
-    for (int i = 0; i < userArr.length; i++) {
-      if (i <= userArr.length / 2) {
-        left[i] = userArr[i];
-      } 
-      else {
-        right[i] = userArr[i];
+  }
+  /**
+   * Helper method for merge sort that merges two arrays and returns the merged array
+   * @param left
+   * @param right
+   * @return merged array
+   */
+  private static int[] merge(int[] left, int[] right) {
+    int[] combArr = new int[left.length + right.length]; 
+    int leftIdx = 0; 
+    int rightIdx = 0;
+    
+    for(int i = 0; i < combArr.length; i++) {
+      System.out.println(rightIdx);
+      if(rightIdx >= right.length  || left[leftIdx] < right[rightIdx]) {
+        combArr[i] = left[leftIdx];
+        leftIdx++;
       }
-      
-    } */
-    int[] retArr;
-    int retIdx = 0;
-    int[] leftVal = new int[1];
-    int[] rightVal = new int[1];
-    if (userArr.length > 1) {
-      int[] left;
-      int[] right;
-      
-      if (userArr.length % 2 == 0) { // even length
-        left = new int[userArr.length / 2];
-        right = new int[userArr.length / 2];
-      } 
       else {
-        left = new int[userArr.length / 2];
-        right = new int[userArr.length - left.length];
+        combArr[i] = right[rightIdx];
+        rightIdx++;
       }
-      leftVal = mergeSort(left);
-      rightVal = mergeSort(right);
     }
-    else {
-      return userArr; // returns single element
-    }
-    retArr = new int[leftVal.length + rightVal.length];
-    if(leftVal[0] > rightVal[0]) {
-      retArr[retIdx] = leftVal[0];
-      retIdx++;
-      retArr[retIdx] = rightVal[0];
-    }
-    else {
-      retArr[retIdx] = rightVal[0];
-      retIdx++;
-      retArr[retIdx] = leftVal[0];
-    } 
-    System.out.println( printArr(userArr));
-      return retArr;
+    //System.out.println(printArr(combArr));
+    return combArr;
   }
 
   /**
@@ -287,13 +296,14 @@ public class ArraySort {
 
   /**
    * 
-   * Helper method for quick sort that helps partition the array indicating the part which is 
-   * worked on in the array.
+   * Helper method for quick sort that helps partition the array indicating the part which is worked
+   * on in the array.
    * 
    * @param userArr
    * @param startIdx
    * @param endIdx
-   * @return
+   * @return idxLeft - the farthest index to which you reach, left of which all elements are smaller
+   *         than the pivot
    */
   private static int partition(int[] userArr, int startIdx, int endIdx) {
     
