@@ -45,6 +45,7 @@ public class ArraySort {
     userIn = sc.next();
     System.out.println();
     System.out.println("The unsorted array is: " + printArr(userArr));
+    System.out.println();
     
     switch (userIn) {
       case "B":
@@ -65,10 +66,10 @@ public class ArraySort {
         break;
       case "Q":
       case "q":
-        quickSort(userArr);
+        quickSort(userArr, 0, userArr.length-1);
         break;
       default:
-        quickSort(userArr);
+        quickSort(userArr, 0, userArr.length-1);
         break;
 
     }
@@ -205,15 +206,118 @@ public class ArraySort {
     }
   }
 
-  private static void mergeSort(int[] userArr) {
-    System.out.println("M");
+  private static int[] mergeSort(int[] userArr) {
+    /*int[] left;
+    int[] right;
+    if (userArr.length % 2 == 0) { // even length
+      left = new int[userArr.length / 2];
+      right = new int[userArr.length / 2];
+    } 
+    else {
+      left = new int[userArr.length / 2];
+      right = new int[userArr.length - left.length];
+    }
+
+    for (int i = 0; i < userArr.length; i++) {
+      if (i <= userArr.length / 2) {
+        left[i] = userArr[i];
+      } 
+      else {
+        right[i] = userArr[i];
+      }
+      
+    } */
+    int[] retArr;
+    int retIdx = 0;
+    int[] leftVal = new int[1];
+    int[] rightVal = new int[1];
+    if (userArr.length > 1) {
+      int[] left;
+      int[] right;
+      
+      if (userArr.length % 2 == 0) { // even length
+        left = new int[userArr.length / 2];
+        right = new int[userArr.length / 2];
+      } 
+      else {
+        left = new int[userArr.length / 2];
+        right = new int[userArr.length - left.length];
+      }
+      leftVal = mergeSort(left);
+      rightVal = mergeSort(right);
+    }
+    else {
+      return userArr; // returns single element
+    }
+    retArr = new int[leftVal.length + rightVal.length];
+    if(leftVal[0] > rightVal[0]) {
+      retArr[retIdx] = leftVal[0];
+      retIdx++;
+      retArr[retIdx] = rightVal[0];
+    }
+    else {
+      retArr[retIdx] = rightVal[0];
+      retIdx++;
+      retArr[retIdx] = leftVal[0];
+    } 
+    System.out.println( printArr(userArr));
+      return retArr;
   }
 
-  private static void quickSort(int[] userArr) {
-    System.out.println("Q");
+  /**
+   * This method implements the quick sort algorithm. Its time complexity is O(N log(n))
+   * 
+   * @param userArr
+   * @param startIdx
+   * @param endIdx
+   */
+  private static void quickSort(int[] userArr, int startIdx, int endIdx) {
+        if (startIdx >= endIdx) { // base case
+      return;
+    }
+
+    int pivotIdx = partition(userArr, startIdx, endIdx);
+
+    System.out.println(printArr(userArr));
+    System.out.println();
+
+    quickSort(userArr, startIdx, pivotIdx - 1);
+    quickSort(userArr, pivotIdx + 1, endIdx);
+  }
+
+  /**
+   * 
+   * Helper method for quick sort that helps partition the array indicating the part which is 
+   * worked on in the array.
+   * 
+   * @param userArr
+   * @param startIdx
+   * @param endIdx
+   * @return
+   */
+  private static int partition(int[] userArr, int startIdx, int endIdx) {
+    
+    int pivotIdx = (startIdx + endIdx) / 2;
+    int pivot = userArr[pivotIdx];
+    swap(userArr, pivotIdx, endIdx); // swap last element and pivot
+    int idxLeft = startIdx;
+    for (int i = startIdx; i < endIdx; i++) { /*
+                                               * for loop iterates through array except for last
+                                               * element(pivot) if element is less than pivot it
+                                               * swaps with left pointer
+                                               * 
+                                               */
+
+      if (userArr[i] <= pivot) {
+        swap(userArr, i, idxLeft);
+        idxLeft++;
+      }
+    }
+    swap(userArr, idxLeft, endIdx);
+   
+    return idxLeft;
+
   }
   
-  
-
 
 }
