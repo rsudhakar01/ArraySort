@@ -211,7 +211,8 @@ public class ArraySort {
   }
 
   /**
-   * This method implements the merge sort algorithm. Its time complexity is O(N log(n))
+   * This method implements the merge sort algorithm. Its time complexity is O(N log(n)).
+   * 
    * @param userArr
    * @return
    */
@@ -243,12 +244,15 @@ public class ArraySort {
     right = mergeSort(right);
     int[] retArr = merge(left,right);
     System.out.println(printArr(retArr));
+    System.out.println();
     return retArr;
     
 
   }
   /**
+   * 
    * Helper method for merge sort that merges two arrays and returns the merged array
+   * 
    * @param left
    * @param right
    * @return merged array
@@ -259,8 +263,7 @@ public class ArraySort {
     int rightIdx = 0;
     
     for(int i = 0; i < combArr.length; i++) {
-      System.out.println(rightIdx);
-      if(rightIdx >= right.length  || left[leftIdx] < right[rightIdx]) {
+      if((leftIdx < left.length) && (rightIdx >= right.length   || left[leftIdx] < right[rightIdx])) {
         combArr[i] = left[leftIdx];
         leftIdx++;
       }
