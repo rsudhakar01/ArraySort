@@ -117,10 +117,10 @@ public class ArraySort {
     }
     retStr += "]";
     return retStr;
-  } 
-  
+  }
+
   /**
-   * Swaps any 2 elements in a given array
+   * Helper method that swaps any 2 elements in a given array
    * 
    * @param arr  - given array
    * @param idx1 - index of 1st element to be swapped
@@ -217,10 +217,10 @@ public class ArraySort {
    * @return
    */
   private static int[] mergeSort(int[] userArr) {
-    if(userArr.length == 1) { // base case
+    if (userArr.length == 1) { // base case
       return userArr;
     }
-    
+
     int[] left;
     int[] right;
     if (userArr.length % 2 == 0) { // even length
@@ -231,23 +231,21 @@ public class ArraySort {
       left = new int[userArr.length / 2];
       right = new int[userArr.length - left.length];
     }
-    
-    for (int i = 0; i < userArr.length/2; i++) {
+
+    for (int i = 0; i < userArr.length / 2; i++) {
       left[i] = userArr[i];
-     
+
     }
-    for( int i = ( userArr.length/2) ; i < userArr.length; i++) {
-      right[i - (userArr.length/2)] = userArr[i];
+    for (int i = (userArr.length / 2); i < userArr.length; i++) {
+      right[i - (userArr.length / 2)] = userArr[i];
     }
-    
+
     left = mergeSort(left);
     right = mergeSort(right);
-    int[] retArr = merge(left,right);
+    int[] retArr = merge(left, right);
     System.out.println(printArr(retArr));
     System.out.println();
     return retArr;
-    
-
   }
   /**
    * 
@@ -258,21 +256,20 @@ public class ArraySort {
    * @return merged array
    */
   private static int[] merge(int[] left, int[] right) {
-    int[] combArr = new int[left.length + right.length]; 
-    int leftIdx = 0; 
+    int[] combArr = new int[left.length + right.length];
+    int leftIdx = 0;
     int rightIdx = 0;
-    
-    for(int i = 0; i < combArr.length; i++) {
-      if((leftIdx < left.length) && (rightIdx >= right.length   || left[leftIdx] < right[rightIdx])) {
+
+    for (int i = 0; i < combArr.length; i++) {
+      if ((leftIdx < left.length)
+          && (rightIdx >= right.length || left[leftIdx] < right[rightIdx])) {
         combArr[i] = left[leftIdx];
         leftIdx++;
-      }
-      else {
+      } else {
         combArr[i] = right[rightIdx];
         rightIdx++;
       }
     }
-    //System.out.println(printArr(combArr));
     return combArr;
   }
 
@@ -284,7 +281,7 @@ public class ArraySort {
    * @param endIdx
    */
   private static void quickSort(int[] userArr, int startIdx, int endIdx) {
-        if (startIdx >= endIdx) { // base case
+    if (startIdx >= endIdx) { // base case
       return;
     }
 
@@ -309,7 +306,7 @@ public class ArraySort {
    *         than the pivot
    */
   private static int partition(int[] userArr, int startIdx, int endIdx) {
-    
+
     int pivotIdx = (startIdx + endIdx) / 2;
     int pivot = userArr[pivotIdx];
     swap(userArr, pivotIdx, endIdx); // swap last element and pivot
@@ -327,9 +324,8 @@ public class ArraySort {
       }
     }
     swap(userArr, idxLeft, endIdx);
-   
-    return idxLeft;
 
+    return idxLeft;
   }
   
 
